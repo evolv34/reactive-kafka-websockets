@@ -1,11 +1,9 @@
 package com.kafka.akka.utils
 
 import akka.http.scaladsl.model.HttpRequest
-import spray.json.JsonParser
+import spray.json.{JsonParser, _}
 
 import scalaj.http.Http
-import spray.json._
-import DefaultJsonProtocol._
 
 case class AuthResponse(
                  access_token: String,
