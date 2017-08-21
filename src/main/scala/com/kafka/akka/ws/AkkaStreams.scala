@@ -1,4 +1,3 @@
-//#full-example
 package com.kafka.akka.ws
 
 import akka.actor.ActorSystem
@@ -8,6 +7,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage, UpgradeToWebSocket}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Flow, Sink, Source}
+import com.kafka.akka.utils.Auth._
 
 
 object AkkaStreams extends App {
@@ -26,7 +26,11 @@ object AkkaStreams extends App {
   val requestHandler: HttpRequest => HttpResponse = {
     case req@HttpRequest(GET, Uri.Path("/kafka"), _, _, _) =>
       req.header[UpgradeToWebSocket] match {
-        case Some(upgrade) => upgrade.handleMessages(kafkaMessageStreamService)
+        case Some(upgrade) => {
+          valid(req)
+          println("Connected Successfully")
+          upgrade.handleMessages(kafkaMessageStreamService)
+        }
         case None => HttpResponse(400, entity = "Not a valid websocket request!")
       }
     case r: HttpRequest =>
@@ -34,5 +38,5 @@ object AkkaStreams extends App {
       HttpResponse(404, entity = "Unknown resource!")
   }
 
-  val bindingFuture = Http().bindAndHandleSync(requestHandler, "localhost", 8080)
+  val bindingFuture = Http().bindAndHandleSync(requestHandler, "localhost", 9093)
 }

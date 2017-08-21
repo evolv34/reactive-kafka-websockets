@@ -1,0 +1,9 @@
+version: "2"
+
+services:
+  wiremock:
+    image: rodolpheche/wiremock:2.7.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./wiremock:/home/wiremock"
