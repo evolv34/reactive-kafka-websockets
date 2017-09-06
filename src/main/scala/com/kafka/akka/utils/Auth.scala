@@ -6,14 +6,13 @@ import spray.json.{JsonParser, _}
 import scalaj.http.Http
 
 case class AuthResponse(
-                 access_token: String,
-                 token_type: String,
-                 expires_in: String,
-                 refresh_token: String)
+                         access_token: String,
+                         token_type: String,
+                         expires_in: String,
+                         refresh_token: String)
 
-
-object MyJsonProtocol extends DefaultJsonProtocol {
-  implicit val colorFormat = jsonFormat4(AuthResponse)
+object AuthResponseObject extends DefaultJsonProtocol {
+  implicit val authFormat = jsonFormat4(AuthResponse)
 }
 
 object Auth {
@@ -27,7 +26,7 @@ object Auth {
         .head
         .value
 
-    import MyJsonProtocol._
+    import AuthResponseObject._
     val authTokenFromServer = JsonParser(token).convertTo[AuthResponse]
 
     if (!receivedToken.toString.equals(authTokenFromServer.access_token)) {

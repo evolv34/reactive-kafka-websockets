@@ -7,7 +7,7 @@ trait Routes extends KafkaRoute {
   lazy val routes = kafkaRoutes
 }
 
-trait BaseRoute {
+trait ActorSystem {
   implicit val streamsSystem = ActorSystem("streams-system")
   implicit val materializer = ActorMaterializer()
 }
