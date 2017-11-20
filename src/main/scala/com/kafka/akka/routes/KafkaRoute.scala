@@ -13,7 +13,6 @@ trait KafkaRoute extends ActorSystem with KafkaProducerService {
       req.header[UpgradeToWebSocket] match {
         case Some(upgrade) => {
           valid(req)
-          println("Connected Successfully")
           upgrade.handleMessages(kafkaProducerService)
         }
         case None => HttpResponse(400, entity = "Not a valid websocket request!")
