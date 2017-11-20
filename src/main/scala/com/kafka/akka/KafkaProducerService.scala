@@ -28,10 +28,7 @@ trait KafkaProducerService extends ActorSystem {
           tm
             .textStream
             .map(JsonParser(_).convertTo[WebSocketMessage])
-            .map(elem => {
-              println(elem)
-              new ProducerRecord[Array[Byte], String](elem.topic, elem.content)
-            })
+            .map(elem => new ProducerRecord[Array[Byte], String](elem.topic, elem.content))
             .runWith(Producer.plainSink(producerSettings))
 
           Nil
