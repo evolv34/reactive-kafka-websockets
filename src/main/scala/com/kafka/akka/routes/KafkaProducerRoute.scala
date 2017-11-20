@@ -6,7 +6,7 @@ import akka.http.scaladsl.model.{HttpRequest, HttpResponse, Uri}
 import com.kafka.akka.KafkaProducerService
 import com.kafka.akka.utils.Auth._
 
-trait KafkaRoute extends ActorSystem with KafkaProducerService {
+trait KafkaProducerRoute extends ActorSystem with KafkaProducerService {
 
   val kafkaRoutes: HttpRequest => HttpResponse = {
     case req@HttpRequest(GET, Uri.Path("/produce"), _, _, _) =>

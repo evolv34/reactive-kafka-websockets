@@ -3,7 +3,7 @@ package com.kafka.akka.routes
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 
-trait Routes extends KafkaRoute {
+trait Routes extends KafkaProducerRoute {
   lazy val routes = kafkaRoutes
 }
 

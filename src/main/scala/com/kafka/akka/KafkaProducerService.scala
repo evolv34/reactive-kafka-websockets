@@ -29,7 +29,11 @@ trait KafkaProducerService extends ActorSystem {
             .textStream
             .map(JsonParser(_).convertTo[WebSocketMessage])
             .map(elem => new ProducerRecord[Array[Byte], String](elem.topic, elem.content))
-            .runWith(Producer.plainSink(producerSettings))
+            .runWith(try{
+              Producer.plainSink(producerSettings)
+            } catch {
+              case e: Exception => throw e
+            })
 
           Nil
         }

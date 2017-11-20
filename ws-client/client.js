@@ -7,7 +7,7 @@ var ws = new WebSocket('ws://localhost:9093/produce',{
 
 ws.on('open', function open() {
     console.log("sending message ...");
-    for(i = 0; i < 10; i ++) {
-        ws.send('{"topic":"hello","content":"world - ' + i + '"}');
+    for(i = 0; i < 100000; i ++) {
+        ws.send('{"topic":"hello1","content":"world - ' + i + '"}');
     }
 });
